@@ -1,24 +1,27 @@
-const { application } = require('express');
+const fs = require('fs');
+
 const express = require('express')
+const bodyParser = require('body-parser');
 
 const app = express()
 
-app.use((req, res, next) => {
-    console.log('this runs everytime!');
-    next()
+app.use(bodyParser.urlencoded({ extended: false }))
+
+app.get('/', (req, res) => {
+    res.send('<center><form action="/message" method="POST"><input type="text" name="message"></form></center>');
 })
 
-app.use('/hello', (req, res) => {
+app.get('/hello', (req, res) => {
     res.send('<h1>Hello Mobin!</h1>')
 })
 
-app.use('/message', (req, res) => {
-    console.log(req.body); 
-    res.redirect('/')
+app.post('/message', (req, res) => {
+    const message = req.body.message
+    fs.writeFile('./data/message.txt', req.body.message, (err) => {
+        if(err) throw err
+        res.redirect('/')
+    })
 })
 
-app.use('/', (req, res) => {
-    res.send('<center><form action="/message" method="POST"><input type="text" name="message"></form></center>');
-})
 
 app.listen(3000)
