@@ -1,9 +1,11 @@
+const path = require('path');
+
 const express = require('express');
 
 const router = express.Router()
 
 router.get('/', (req, res) => {
-    res.send('<center><form action="/admin/message" method="POST"><input type="text" name="message"></form></center>');
+    res.sendFile(path.join(__dirname ,'../views', 'index.html') )
 })
 
 router.get('/hello', (req, res) => {
