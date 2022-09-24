@@ -1,15 +1,9 @@
-const fs = require('fs');
-
 const express = require('express');
+
+const adminController = require('../controllers/admin');
 
 const router = express.Router()
 
-router.post('/message', (req, res) => {
-    const message = req.body.message
-    fs.writeFile('./data/message.txt', req.body.message, (err) => {
-        if(err) throw err
-        res.redirect('/')
-    })
-})
+router.post('/add-todo', adminController.addTodo)
 
 module.exports = router

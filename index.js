@@ -1,27 +1,33 @@
 const path = require('path');
 
-const express = require('express')
+const express = require('express');
 const bodyParser = require('body-parser');
-const rootDir = require('./utils/path');
 
+const { setStatics } = require('./utils/statics');
+const rootDir = require('./utils/path');
 const adminRoutes = require('./routes/admin');
-const homeRoutes = require('./routes/home');
-const { dirname } = require('path');
+const indexRoutes = require('./routes/index');
 
 const app = express()
 
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(express.static(path.join(rootDir, 'public')))
+//? Middlewares
+app.use(bodyParser.urlencoded({ extended:false }))
+//!
+
+//? EJS
+app.set('view engine', 'EJS')
+app.set('views', 'views')
+//!
+
+//? static
+setStatics(app)
+//!
 
 //? Routes
 app.use('/admin', adminRoutes)
-app.use(homeRoutes)
-//! End Routes
-
-app.use('/', (req, res) => {
-    res.sendFile(path.join(rootDir, 'views', '404.html'))
-})
+app.use(indexRoutes)
+//!
 
 
 
-app.listen(3000)
+app.listen(3000, () => console.log('http://localhost:3000'))

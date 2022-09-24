@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <title><%= pageTitle %></title>
+</head>
+<body>
+    <div class="form-group d-flex align-items-center flex-column">
+        <h1>Todoes</h1>
+        <form action="/admin/add-todo" role="form" method="POST"
+        class="w-50 d-flex justify-content-center align-items-center">
+            <div class="input-group">
+                <input type="text" name="todo" class="form-control w-50" placeholder="Today's task">
+                <button type="submit" class="btn btn-primary btn-lg fa fa-plus"></button>
+            </div>
+        </form>
+        <div class="d-flex justify-content-center w-50 mb-3 alert alert-primary">
+            <p class="d-inline col">compeleted tasks <span class="badge badge-success badge-pill"></span></p>
+            <p class="d-inline col">remaining tasks <span class="badge badge-warning badge-pill"></span></p>
+        </div>
+        <% if(todos.lenght > 0) { %>
+            <div class="alert alert-warning w-50 d-flex justify-content-center">
+                <h4 class="alert-heading">You don't have any task today!</h4>
+            </div>
+            <% } %>
+    </div>
+</body>
+</html>
