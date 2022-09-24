@@ -4,7 +4,7 @@ exports.getIndex = (req, res) => {
     Todo.fetchAll((todos) => {
         res.render('index', {
             pageTitle: 'todos',
-            todos,
+            todos: todos,
         })
     })
 }
