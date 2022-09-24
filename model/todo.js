@@ -25,7 +25,7 @@ class Todo {
 
     static deleteTodo(id, callback){
         todoUtils.getTodos((todos) => {
-            todoUtils.saveTodos(todos.filter(t => t.id = id), (err) => {
+            todoUtils.saveTodos(todos.filter(t => t.id == id), (err) => {
                 callback(err)
             })
         })
