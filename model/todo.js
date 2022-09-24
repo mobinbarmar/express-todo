@@ -1,9 +1,4 @@
-const fs = require('fs');
-const path = require('path');
-
-const rootDir = require('../utils/path');
-
-const filePath = path.join(rootDir, 'data', 'todos.json')
+const todoUtils = require('../utils/todos');
 
 class Todo {
     constructor(id, title, completed = false) {
@@ -13,49 +8,39 @@ class Todo {
     }
 
     save(callback){
-        fs.readFile(filePath, (err, fileContent) => {
-            // if(err) return []
-            const todos = JSON.parse(fileContent)
+        todoUtils.getTodos((todos) => {
             todos.push(this)
-
-            fs.writeFile(filePath, JSON.stringify(todos), (err) => {
-                if(!err) callback(err)
-                else return callback([])
+            todoUtils.saveTodos(todos, (err) => {
+                callbackK(err)
             })
         })
 
     }
 
     static fetchAll(callback){
-        fs.readFile(filePath, (err, fileContent) => {
-            if(err) return []
-            const todos = JSON.parse(fileContent)
+        todoUtils.getTodos((todos) => {
             callback(todos)
         })
     }
 
     static deleteTodo(id, callback){
-        fs.readFile(filePath, (err, fileContent) => {
-            const todo = JSON.stringify(fileContent)
-            const filteredTodos = todo.filter(t => t.id != id)
-            fs.writeFile(filePath, JSON.stringify(filteredTodos), (err) => {
+        todoUtils.getTodos((todos) => {
+            todoUtils.saveTodos(todos.filter(t => t.id = id), (err) => {
                 callback(err)
             })
         })
     }
 
     static setTodoToCompelete(id, callback){
-        fs.readFile(filePath, (err, filecontent) => {
-            const todos = JSON.parse(filecontent)
+        todoUtils.getTodos((todos) => {
             const todoIndex = todos.findIndex(t => t.id == id)
             const todo = todos[todoIndex]
             todo.completed = true
             todos[todoIndex] = todo
-            fs.writeFile(filePath, JSON.stringify(todos), (err) => {
+            todoUtils.saveTodos(todos, (err) => {
                 callback(err)
             })
         })
-
     }
 }
 

@@ -7,6 +7,7 @@ const { setStatics } = require('./utils/statics');
 const rootDir = require('./utils/path');
 const adminRoutes = require('./routes/admin');
 const indexRoutes = require('./routes/index');
+const errController = require('./controllers/error');
 
 const app = express()
 
@@ -27,6 +28,9 @@ setStatics(app)
 app.use('/admin', adminRoutes)
 app.use(indexRoutes)
 //!
+
+
+app.use(errController.get404)
 
 
 
